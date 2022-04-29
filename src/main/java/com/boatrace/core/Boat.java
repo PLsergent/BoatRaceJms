@@ -1,9 +1,13 @@
 package com.boatrace.core;
 
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageListener;
+import javax.jms.TextMessage;
 import java.time.Duration;
 import java.util.Random;
 
-public class Boat {
+public class Boat implements MessageListener {
     public int id;
     public Duration totalTimeToFinish;
     public Duration timeLeft;
@@ -39,6 +43,15 @@ public class Boat {
         }
         else {
             return "u" + id + " : " + timeLeft.getSeconds() + "s";
+        }
+    }
+
+    @Override
+    public void onMessage(Message message) {
+        try {
+            System.out.println(this + " received message: " + ((TextMessage) message).getText());
+        } catch (JMSException e) {
+            throw new RuntimeException(e);
         }
     }
 }
