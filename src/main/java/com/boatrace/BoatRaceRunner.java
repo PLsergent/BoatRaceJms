@@ -1,6 +1,6 @@
 package com.boatrace;
 
-import main.java.com.boatrace.core.Race;
+import com.boatrace.core.Race;
 
 public class BoatRaceRunner {
     public static void main(String[] args) throws InterruptedException {

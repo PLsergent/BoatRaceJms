@@ -1,4 +1,4 @@
-package main.java.com.boatrace.core;
+package com.boatrace.core;
 
 import java.time.Duration;
 import java.util.Random;
@@ -35,10 +35,10 @@ public class Boat {
 
     public String toString() {
         if (finished) {
-            return "\033[0;1m" + id + " : " + timeLeft.getSeconds() + "s\033[0m";
+            return "\033[0;1m u" + id + " : " + timeLeft.getSeconds() + "s\033[0m";
         }
         else {
-            return id + " : " + timeLeft.getSeconds() + "s";
+            return "u" + id + " : " + timeLeft.getSeconds() + "s";
         }
     }
 }

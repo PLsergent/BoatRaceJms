@@ -1,9 +1,6 @@
-package main.java.com.boatrace.core;
+package com.boatrace.core;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 public class Race {
     public ArrayList<Boat> runners;
