@@ -13,13 +13,15 @@ public class Boat implements MessageListener {
     public Duration timeLeft;
     public boolean finished;
     public int velocity;
+    public Race race;
 
-    public Boat(int id) {
+    public Boat(int id, Race race) {
         this.id = id;
         this.totalTimeToFinish = Duration.ofSeconds(new Random().nextInt(60));
         this.timeLeft = totalTimeToFinish;
         this.finished = false;
         this.velocity = 1;
+        this.race = race;
     }
 
     public void timeTicking() {
@@ -28,13 +30,14 @@ public class Boat implements MessageListener {
         }
         this.timeLeft = timeLeft.minus(Duration.ofSeconds(velocity));
 
-        if (timeLeft.getSeconds() == 0) {
+        if (timeLeft.getSeconds() <= 0) {
             finished = true;
+            timeLeft = Duration.ofSeconds(0);
         }
     }
 
-    public void accelerate() {
-        velocity++;
+    public void accelerate(int times) {
+        velocity += times;
     }
 
     public String toString() {
@@ -49,7 +52,9 @@ public class Boat implements MessageListener {
     @Override
     public void onMessage(Message message) {
         try {
-            System.out.println(this + " received message: " + ((TextMessage) message).getText());
+            if (Integer.parseInt(((TextMessage) message).getText()) != this.id) {
+                this.accelerate(race.ranking.indexOf(this));
+            }
         } catch (JMSException e) {
             throw new RuntimeException(e);
         }

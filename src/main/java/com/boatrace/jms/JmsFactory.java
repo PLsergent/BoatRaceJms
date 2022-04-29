@@ -14,10 +14,11 @@ public class JmsFactory {
     private Connection connection;
     private final ConnectionFactory connectionFactory;
 
-    public JmsFactory() throws Exception {
-        broker = BrokerFactory.createBroker(new URI("broker:(tcp://localhost:61616)"));
+    public JmsFactory(int port) throws Exception {
+        broker = BrokerFactory.createBroker(new URI("broker:(tcp://localhost:" + port + ")"));
+        broker.setBrokerName(String.valueOf(port));
         connectionFactory = new ActiveMQConnectionFactory(
-                "tcp://localhost:61616");
+                "tcp://localhost:" + port);
     }
 
     public Connection openConnection() throws Exception {
