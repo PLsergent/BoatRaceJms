@@ -19,10 +19,6 @@ public class Race {
         initRace(numberOfBoats);
     }
 
-    public void updateRanking() {
-        ranking.sort((b1, b2) -> (int) (b1.timeLeft.getSeconds() - b2.timeLeft.getSeconds()));
-    }
-
     public void initBoats(int numberOfBoats) throws Exception {
         this.runners = new ArrayList<>();
 
@@ -48,6 +44,7 @@ public class Race {
 
         for (Boat boat : ranking) {
             boat.timeTicking();
+            // Send the boat is to the organizer in the ranking order
             this.rankingQueue.createOrReplaceMessage(String.valueOf(boat.id));
             this.rankingQueue.send();
             totalTimeLeft += boat.timeLeft.getSeconds();
@@ -55,6 +52,11 @@ public class Race {
         System.out.println();
         this.raceFinished = totalTimeLeft == 0;
         updateRanking();
+    }
+
+    public void updateRanking() {
+        // Method used to sort the ranking array based on the time left of each boat
+        ranking.sort((b1, b2) -> (int) (b1.timeLeft.getSeconds() - b2.timeLeft.getSeconds()));
     }
 
     public Boat getBoatById(int id) {

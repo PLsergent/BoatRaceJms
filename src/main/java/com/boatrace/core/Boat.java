@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class Boat implements MessageListener {
     public int id;
-    public Duration totalTimeToFinish;
+    public Duration totalTimeToFinish; // time left at the beginning of the race
     public Duration timeLeft;
     public boolean finished;
     public int velocity;
@@ -52,8 +52,9 @@ public class Boat implements MessageListener {
     @Override
     public void onMessage(Message message) {
         try {
+            // if the id received is different from the object id
             if (Integer.parseInt(((TextMessage) message).getText()) != this.id) {
-                this.accelerate(race.ranking.indexOf(this));
+                this.accelerate(race.ranking.indexOf(this)); // accelerate the boat by +rank
             }
         } catch (JMSException e) {
             throw new RuntimeException(e);
